@@ -1,0 +1,9 @@
+server:
+  port: 8001
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7001/eureka  # eureka的暴露地址，直接注册
+spring:
+  application:
+    name: order-provider   #应用的名称，在同一个eureka中必须不重复

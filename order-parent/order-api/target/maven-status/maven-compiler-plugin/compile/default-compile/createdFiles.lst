@@ -1,0 +1,4 @@
+cn\tedu\api\hystrix\OrderFallBack$1.class
+cn\tedu\api\domain\Order.class
+cn\tedu\api\feign\OrderFeign.class
+cn\tedu\api\hystrix\OrderFallBack.class

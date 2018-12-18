@@ -1,0 +1,39 @@
+server:
+  port: 9002
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7001/eureka  # eureka的暴露地址，直接注册
+    register-with-eureka: false
+    
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:  # 这里使用default，但是如果针对单个方法，可以使用方法名称
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 10
+        sleepWindowInMilliseconds: 10000
+        errorThresholdPercentage: 60
+        
+ribbon:   # 设置ribbon的超时时间，这里使用Feign会和Hystrix的超时间相互干扰
+  ReadTimeout: 5000
+  ConnectTimeout: 3000
+  OkToRetryOnAllOperations: true  #对所有操作都进行重试。
+  MaxAutoRetriesNextServer: 2     # 切换实例的重试次数。 
+  MaxAutoRetries: 1               # 对当前实例的重试次数。
+  
+management:    # 配置节点，一定要配置，否则将不能连接上
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+      

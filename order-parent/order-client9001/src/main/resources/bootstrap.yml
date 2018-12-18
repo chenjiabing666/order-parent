@@ -1,0 +1,23 @@
+eureka:   # 配置eureka客户端，一定要bootstrap文件中配置，因为需要到注册中心获取配置中心的服务端的地址，如果配置在github上面的配置，那么将会找不到配置中心的服务端
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7001/eureka  # eureka的暴露地址，直接注册
+    register-with-eureka: false
+spring:
+  application:
+    name: orderClient9001   # 配置项目的名称，也是github中对应配置文件的名称（去掉后缀）
+server:
+  port: 9001
+  
+hystrix:
+  command:
+    default:  # 这里使用default，但是如果针对单个方法，可以使用方法名称
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 10
+        sleepWindowInMilliseconds: 10000
+        errorThresholdPercentage: 60
